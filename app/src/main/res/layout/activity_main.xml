@@ -23,19 +23,19 @@
 
     <Button
         android:id="@+id/mainLoginBtn"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:text="Prisijungti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.633" />
 
     <Button
         android:id="@+id/mainRegisterBtn"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:text="Registruotis"
         app:layout_constraintBottom_toBottomOf="parent"

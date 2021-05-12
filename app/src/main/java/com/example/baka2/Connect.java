@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class Connect extends AppCompatActivity {
 
     public String session_id = "";
+    public String cart_id = "";
     private static final String TAG = "Connect";
     public Button startShop;
     public Button backButton;
@@ -82,7 +83,8 @@ public class Connect extends AppCompatActivity {
         {
             Intent shoppinIntent = new Intent(this, ShoppingInProgress.class);
             shoppinIntent.putExtra("session_id", session_id);
-            shoppinIntent.putExtra("cart_id", cartCode);
+            shoppinIntent.putExtra("cart_code", cartCode);
+            shoppinIntent.putExtra("cart_id", cart_id);
             startActivity(shoppinIntent);
         }
     }
@@ -147,16 +149,21 @@ public class Connect extends AppCompatActivity {
                 if(jsonObject.getString("status").equals("OK"))
                 {
                     session_id = jsonObject.getString("assigned_cart_id");
+                    cart_id = jsonObject.getString("cart_id");
                     publishProgress("OK");
                     finalResult = "OK";
                 }
-                /*else if(jsonObject.getString("status").equals("no_cart")) {
+                else if(jsonObject.getString("status").equals("no_cart")) {
+                    publishProgress("ERROR","no_cart");
                     openDialog("Nepavyko prisijungti:","Toks vežimėlis nėra registruotas");
+                    finalResult = "ERROR";
                 }
                 else
                 {
+                    publishProgress("ERROR","used_cart");
                     openDialog("Nepavyko prisijungti:","Vežimėlis užimtas");
-                }*/
+                    finalResult = "ERROR";
+                }
                 urlConnection.disconnect();
                 //publishProgress();
             } catch (Exception e) {

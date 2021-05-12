@@ -4,35 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShoppingLists">
+    tools:context=".OrdersLists">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/ordersListView"
         android:layout_width="match_parent"
         android:layout_height="560dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="140dp" />
-
     <Button
-        android:id="@+id/shoppingListCreateBtn"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-
-        android:layout_marginStart="240dp"
-        android:layout_marginLeft="240dp"
-        android:layout_marginTop="629dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="54dp"
-        android:text="Kurti sąrašą" />
-
-    <Button
-        android:id="@+id/shoppingListBackBtn"
+        android:id="@+id/ordersListBackBtn"
         android:layout_width="134dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -47,4 +28,5 @@
         android:layout_marginRight="263dp"
         android:layout_marginBottom="54dp"
         android:text="Atgal" />
+
 </RelativeLayout>

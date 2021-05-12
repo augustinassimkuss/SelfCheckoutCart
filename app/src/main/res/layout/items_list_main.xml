@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShoppingLists">
+    tools:context=".ItemsList">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/itemsListView"
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="550dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="140dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="157dp" />
 
     <Button
-        android:id="@+id/shoppingListCreateBtn"
-        android:layout_width="147dp"
+        android:id="@+id/itemsAddBtn"
+        android:layout_width="134dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -28,11 +30,11 @@
         android:layout_marginTop="629dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="54dp"
-        android:text="Kurti sąrašą" />
+        android:layout_marginBottom="34dp"
+        android:text="Pridėti" />
 
     <Button
-        android:id="@+id/shoppingListBackBtn"
+        android:id="@+id/itemsListBackBtn"
         android:layout_width="134dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -45,6 +47,21 @@
         android:layout_marginTop="629dp"
         android:layout_marginEnd="263dp"
         android:layout_marginRight="263dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="34dp"
         android:text="Atgal" />
+
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/itemsSearchField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="29dp"
+        android:ems="10"
+
+        android:inputType="textPersonName"
+
+        android:text="" />
 </RelativeLayout>

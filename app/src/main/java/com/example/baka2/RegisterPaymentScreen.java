@@ -87,7 +87,7 @@ public class RegisterPaymentScreen extends AppCompatActivity {
         if(clientDataP.getId() != -1)
         {
             registerPaymentSkipButton.setVisibility(View.GONE);
-            if(clientDataP.getCard_number() != null)
+            if(clientDataP.getCard_number()==null)
                 registerPaymentCompleteButton.setText("Keisti kortelę");
             else
                 registerPaymentCompleteButton.setText("Pridėti kortelę");
@@ -198,6 +198,11 @@ public class RegisterPaymentScreen extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void openMainPageSkipPayment() throws ExecutionException, InterruptedException {
+        clientDataP.setPayment_address(null);
+        clientDataP.setPayment_full_name(null);
+        clientDataP.setCard_number("null");
+        clientDataP.setExpiry_date(null);
+        clientDataP.setCcv(null);
         String response = new RegisterHTTP().execute(Global.urlReturn("register.php"), null).get();
         if(response.equals("OK")) {
             Global.clientDataGlobal = clientDataP;
@@ -240,7 +245,7 @@ public class RegisterPaymentScreen extends AppCompatActivity {
 
                 //Kuriam JSON POST requestui
                 String jsonInputString = "{" +
-                        "\"full_name\": \"" + clientDataP.getEmail() + "\", " +
+                        "\"full_name\": \"" + clientDataP.getFull_name() + "\", " +
                         "\"password\": \"" + clientDataP.getPassword() + "\", " +
                         "\"birth_date\": \"" + clientDataP.getBirth_date() + "\", " +
                         "\"phone_number\": \"" + clientDataP.getPhone_number() + "\", " +
@@ -358,7 +363,8 @@ public class RegisterPaymentScreen extends AppCompatActivity {
                             "\"payment_address\": \"" + clientDataP.getPayment_address() + "\", " +
                             "\"card_number\": \"" + clientDataP.getCard_number() + "\", " +
                             "\"expiry_date\": \"" + clientDataP.getExpiry_date() + "\", " +
-                            "\"ccv\": \"" + clientDataP.getCcv() + "\"}";
+                            "\"ccv\": \"" + clientDataP.getCcv() + "\", " +
+                            "\"is_remove\": \"0\"}";
                     byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
                     oStream.write(input, 0, input.length);
                 }

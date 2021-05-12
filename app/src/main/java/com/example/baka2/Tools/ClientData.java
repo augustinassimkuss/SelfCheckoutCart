@@ -35,9 +35,14 @@ public class ClientData implements Serializable {
     public void setEmail(String email) {this.email = email;}
     public void setPayment_full_name(String payment_full_name) {this.payment_full_name = payment_full_name;}
     public void setPayment_address(String payment_address) {this.payment_address = payment_address;}
-    public void setCard_number(String card_number) {this.card_number = card_number;}
+    public void setCard_number(String card_number) {if(!card_number.equals("null"))this.card_number = card_number;}
     public void setExpiry_date(String expiry_date) {this.expiry_date = expiry_date;}
     public void setCcv(String ccv) {this.ccv = ccv;}
+
+    public void setNulls()
+    {
+
+    }
 
 
 }

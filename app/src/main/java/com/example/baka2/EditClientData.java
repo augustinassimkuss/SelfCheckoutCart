@@ -3,6 +3,7 @@ package com.example.baka2;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -47,6 +48,7 @@ public class EditClientData extends AppCompatActivity {
     EditText passwordEdit;
     EditText passwordREdit;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,16 +59,15 @@ public class EditClientData extends AppCompatActivity {
         emailEdit = findViewById(R.id.editElInput);
         numberEdit = findViewById(R.id.editPhoneInput);
         dateEdit = findViewById(R.id.editDateInput);
-        passwordEdit  = findViewById(R.id.editPswInput);
-        passwordREdit  = findViewById(R.id.editPswRepeatInput);
+        passwordEdit = findViewById(R.id.editPswInput);
+        passwordREdit = findViewById(R.id.editPswRepeatInput);
+        setHints();
         editedData.setId(clientData.getId());
         editedData.setFull_name(fullNameEdit.getText().toString());
         editedData.setEmail(emailEdit.getText().toString());
         editedData.setBirth_date(dateEdit.getText().toString());
         editedData.setPhone_number(numberEdit.getText().toString());
         editedData.setPassword(passwordEdit.getText().toString());
-        setHints();
-
 
 
         backBtn = findViewById(R.id.editBackBtn);
@@ -94,8 +95,7 @@ public class EditClientData extends AppCompatActivity {
         paymentBtn = findViewById(R.id.editPaymentBtn);
         removePaymentBtn = findViewById(R.id.editRemovePaymentBtn);
 
-        if(clientData.getCard_number() == null)
-        {
+        if (clientData.getCard_number() == null) {
             removePaymentBtn.setVisibility(View.GONE);
             paymentBtn.setText("Pridėti apmokėjimo kortelę");
         }
@@ -121,32 +121,32 @@ public class EditClientData extends AppCompatActivity {
             }
         });
     }
+
     @Override
-    public void onBackPressed(){
-            Intent openMain = new Intent(this, HomeScreen.class);
-            startActivity(openMain);
+    public void onBackPressed() {
+        Intent openMain = new Intent(this, HomeScreen.class);
+        startActivity(openMain);
     }
 
-    public void openMainPage()
-    {
+    public void openMainPage() {
         Intent openMain = new Intent(this, HomeScreen.class);
         startActivity(openMain);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void openAddPaymentPage()
-    {
+    public void openAddPaymentPage() {
         Intent openAddPaymentIntent = new Intent(this, RegisterPaymentScreen.class);
         final Bundle bundle = new Bundle();
         bundle.putBinder("ClientData", new ObjectWrapperForBinder(clientData));
         openAddPaymentIntent.putExtras(bundle);
         startActivity(openAddPaymentIntent);
     }
+
     public void removePaymentCard() throws ExecutionException, InterruptedException {
         new removeCardHTTP().execute(Global.urlReturn("edit_user_payment.php"), null).get();
     }
-    public void setHints()
-    {
+
+    public void setHints() {
         fullNameEdit.setText(clientData.getFull_name());
         emailEdit.setText(clientData.getEmail());
         dateEdit.setText(clientData.getBirth_date());
@@ -154,29 +154,28 @@ public class EditClientData extends AppCompatActivity {
         passwordEdit.setText(clientData.getPassword());
         passwordREdit.setText(clientData.getPassword());
     }
-    public boolean validateDetails()
-    {
+
+    public boolean validateDetails() {
         final String psw = passwordEdit.getText().toString();
         final String psw2 = passwordREdit.getText().toString();
         final TextView pswText = findViewById(R.id.editPswText);
         final TextView psw2Text = findViewById(R.id.editPswRepeatText);
 
         final String email = emailEdit.getText().toString();
-        final TextView emailText =  findViewById(R.id.editElText);
+        final TextView emailText = findViewById(R.id.editElText);
         int falseCount = 0;
-        if(!psw.equals(psw2) || psw.length() < 1 || psw2.length() < 1) {
+        if (!psw.equals(psw2) || psw.length() < 1 || psw2.length() < 1) {
             pswText.setTextColor(Color.RED);
             psw2Text.setTextColor(Color.RED);
             falseCount++;
         }
-        if(!Global.isValidEmail(email))
-        {
+        if (!Global.isValidEmail(email)) {
             emailText.setTextColor(Color.RED);
             falseCount++;
         }
-        if(falseCount != 0)
+        if (falseCount != 0)
             return false;
-        else{
+        else {
             editedData.setId(clientData.getId());
             editedData.setFull_name(fullNameEdit.getText().toString());
             editedData.setEmail(email);
@@ -191,11 +190,10 @@ public class EditClientData extends AppCompatActivity {
             return true;
         }
     }
-    public void updateDetails() throws ExecutionException, InterruptedException {
-        if(validateDetails())
-        {
-            String response = new editHTTP().execute(Global.urlReturn("edit_user.php"), null).get();
 
+    public void updateDetails() throws ExecutionException, InterruptedException {
+        if (validateDetails()) {
+            new editHTTP().execute(Global.urlReturn("edit_user.php"), null).get();
         }
     }
 
@@ -233,7 +231,7 @@ public class EditClientData extends AppCompatActivity {
                 try (OutputStream oStream = urlConnection.getOutputStream()) {
                     String jsonInputString = "{" +
                             "\"id\": \"" + editedData.getId() + "\", " +
-                            "\"full_name\": \"" + editedData.getEmail() + "\", " +
+                            "\"full_name\": \"" + editedData.getFull_name() + "\", " +
                             "\"password\": \"" + editedData.getPassword() + "\", " +
                             "\"birth_date\": \"" + editedData.getBirth_date() + "\", " +
                             "\"phone_number\": \"" + editedData.getPhone_number() + "\", " +
@@ -253,14 +251,11 @@ public class EditClientData extends AppCompatActivity {
                 //Tikrinam response status
                 Log.e(TAG, "response: " + response.toString());
                 JSONObject jArray = new JSONObject(response.toString());
-                if(jArray.getString("status").equals("OK"))
-                {
+                if (jArray.getString("status").equals("OK")) {
                     publishProgress("OK");
                     finishStatus = "OK";
                     Global.clientDataGlobal = editedData;
-                }
-                else if(jArray.getString("status").equals("ERROR"))
-                {
+                } else if (jArray.getString("status").equals("ERROR")) {
                     publishProgress("ERROR", jArray.getString("reason"));
                     finishStatus = "ERROR";
                 }
@@ -278,8 +273,7 @@ public class EditClientData extends AppCompatActivity {
         protected void onProgressUpdate(String... values) {
             //tikrinam response status ir pakeiciam return
 
-            if (counter == 1)
-            {
+            if (counter == 1) {
                 if (values[0].equals("OK")) {
                     counter -= 1;
                     openDialog("Paskyra sėkmingai atnaujinta", "");
@@ -335,11 +329,12 @@ public class EditClientData extends AppCompatActivity {
                 try (OutputStream oStream = urlConnection.getOutputStream()) {
                     String jsonInputString = "{" +
                             "\"id\": \"" + editedData.getId() + "\", " +
-                            "\"payment_full_name\": \"\", " +
-                            "\"payment_address\": \"\", " +
-                            "\"card_number\": \"\", " +
-                            "\"expiry_date\": \"\", " +
-                            "\"ccv\": \"\"}";
+                            "\"payment_full_name\": null, " +
+                            "\"payment_address\": null, " +
+                            "\"card_number\": null, " +
+                            "\"expiry_date\": null, " +
+                            "\"ccv\": null, " +
+                            "\"is_remove\": \"1\"}";
                     byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
                     oStream.write(input, 0, input.length);
                 }
@@ -355,19 +350,16 @@ public class EditClientData extends AppCompatActivity {
                 //Tikrinam response status
                 Log.e(TAG, "response: " + response.toString());
                 JSONObject jArray = new JSONObject(response.toString());
-                if(jArray.getString("status").equals("OK"))
-                {
+                if (jArray.getString("status").equals("OK")) {
                     publishProgress("OK");
                     finishStatus = "OK";
                     editedData.setPayment_full_name(null);
                     editedData.setPayment_address(null);
-                    editedData.setCard_number(null);
+                    editedData.setCard_number("null");
                     editedData.setExpiry_date(null);
                     editedData.setCcv(null);
                     Global.clientDataGlobal = editedData;
-                }
-                else if(jArray.getString("status").equals("ERROR"))
-                {
+                } else if (jArray.getString("status").equals("ERROR")) {
                     publishProgress("ERROR", jArray.getString("reason"));
                     finishStatus = "ERROR";
                 }
@@ -385,28 +377,22 @@ public class EditClientData extends AppCompatActivity {
         protected void onProgressUpdate(String... values) {
             //tikrinam response status ir pakeiciam return
 
-            if (counter == 1)
-            {
+            if (counter == 1) {
                 if (values[0].equals("OK")) {
                     counter -= 1;
                     openDialog("Kortelė sėkmingai panaikinta", "");
-                } /*else {
+                } else {
                     counter -= 1;
-
-                    if (values[1].equals("used_email")) {
-                        openDialog("Duomenų atnaujinti nepavyko", "Toks El. Paštas jau užimtas");
-                    } else {
-                        openDialog("Duomenų atnaujinti nepavyko", "Toks telefono numeris jau užimtas");
-                    }
-                }*/
+                    openDialog("Įvyko klaida", "Laikini trukgdžiai");
+                }
             }
         }
-
         @Override
         protected void onPostExecute(String result) {
             actionProgressDialog.dismiss();
         }
     }
+
     public void openDialog(String title, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(title);

@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 
@@ -36,6 +37,7 @@ public class LoginScreen extends AppCompatActivity implements Serializable {
     private static final String TAG = "LoginScreen";
     private Button loginBackBtn;
     private Button loginHomeBtn;
+    String[][] itemLists;
     //static String url = "http://192.168.149.145:80/baka/login.php";
     static String domainUrl = "https://computerizedselfcheckoutcart.tk/requests/app/login.php";
     static ClientData clientDatat = new ClientData();
@@ -102,6 +104,7 @@ public class LoginScreen extends AppCompatActivity implements Serializable {
             String response = new LoginHTTP().execute(domainUrl, email, psw, null).get();
             if(response.equals("OK")) {
                 Global.clientDataGlobal = clientDatat;
+
                 return true;
             }
         }
@@ -174,11 +177,13 @@ public class LoginScreen extends AppCompatActivity implements Serializable {
                     clientDatat.setPhone_number(jsonObjectUser.getString("phone_number"));
                     clientDatat.setBirth_date(jsonObjectUser.getString("birth_date"));
                     clientDatat.setPassword(jsonObjectUser.getString("password"));
-                    clientDatat.setPayment_full_name(jsonObjectUser.getString("payment_full_name"));
-                    clientDatat.setPayment_address(jsonObjectUser.getString("payment_address"));
-                    clientDatat.setCard_number(jsonObjectUser.getString("card_number"));
-                    clientDatat.setExpiry_date(jsonObjectUser.getString("expiry_date"));
-                    clientDatat.setCcv(jsonObjectUser.getString("ccv"));
+                    if(jsonObjectUser.getString("card_number") != null) {
+                        clientDatat.setPayment_full_name(jsonObjectUser.getString("payment_full_name"));
+                        clientDatat.setPayment_address(jsonObjectUser.getString("payment_address"));
+                        clientDatat.setCard_number(jsonObjectUser.getString("card_number"));
+                        clientDatat.setExpiry_date(jsonObjectUser.getString("expiry_date"));
+                        clientDatat.setCcv(jsonObjectUser.getString("ccv"));
+                    }
                     publishProgress("OK");
                     finalResult = "OK";
                 } else{
@@ -213,6 +218,7 @@ public class LoginScreen extends AppCompatActivity implements Serializable {
             // execution of result of Long time consuming operatio
         }
     }
+
     public void openDialog(String title, String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(title);

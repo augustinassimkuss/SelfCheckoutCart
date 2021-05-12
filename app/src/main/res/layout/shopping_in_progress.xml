@@ -65,7 +65,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='Apsipirkimas pradėtas. Vežimėlyje spausite "Gerai"'
+            android:text='Apsipirkimas pradėtas. Vežimėlyje spauskite "Gerai".'
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,7 +79,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tolimesnės instrukcijos vaizduojamos vežimėlio ekrane"
+            android:text="Tolimesnės instrukcijos vaizduojamos vežimėlio ekrane."
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Vežimėlyje užbaigus apsipirkimą ir pasirinkus atsiskaityti telefonu- nuspauskite Mokėti mygtuką"
+            android:text='Vežimėlyje užbaigus apsipirkimą ir pasirinkus atsiskaityti telefonu - nuspauskite "Mokėti" mygtuką.'
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

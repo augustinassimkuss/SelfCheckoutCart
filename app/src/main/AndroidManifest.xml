@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ItemsList"></activity>
+        <activity android:name=".CreateShoppingList" />
+        <activity android:name=".OrdersLists" />
+        <activity android:name=".OrderListsData" />
+        <activity android:name=".ShoppingListData" />
         <activity android:name=".EditClientData" />
         <activity android:name=".ShoppingLists" />
         <activity
